@@ -65,7 +65,11 @@ header ul {
     color: rgb(42, 240, 55)
 }
 
-.menu-items-list #log-in-button {
+#login .menu-items-list #login-button a {
+    color: rgb(42, 240, 55)
+}
+
+.menu-items-list #login-button {
     font-family: 'Times New Roman', Times, serif;
     float: right;
     margin-right: 10vw;
@@ -73,7 +77,7 @@ header ul {
     font-weight:bolder;
 }
 
-.menu-items-list #log-in-button:hover {
+.menu-items-list #login-button:hover {
     color: rgb(42, 240, 55);
 }
 

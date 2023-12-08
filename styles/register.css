@@ -1,0 +1,40 @@
+.loginForm {
+    width: 400px;
+    height: 500px;
+    border: 3px solid #73AD21;
+    padding: 10px;
+    background-color: white;
+    margin: auto;
+    margin-top: 160px;
+}
+
+.loginForm h2 {
+    text-align: center;
+}
+
+.inputs {
+    margin-left: 10px;
+}
+
+#password-input2 {
+    margin-bottom: 20px;
+}
+
+.loginTexts {
+    margin-left: 10px;
+}
+
+.buttons1 {
+    margin-left: 12px;
+}
+
+.buttons2 {
+    float: left;
+    margin-top: 70px;
+    margin-left: 150px;
+    
+}
+
+#register-button {
+    margin-right: 10px;
+}
