@@ -103,11 +103,11 @@ header ul {
 
 
     body {
-        background-position-y: 200px;
+        background-position-y: 130px;
     }
 
     header {
-      height: 200px;
+      height: 130px;
       padding-left: 0px;
     }
 
@@ -118,17 +118,16 @@ header ul {
     }
 
     .menu-items-list li {
-        display: block;
+        float: left;
         margin-bottom: 10px;
         font-size: 1.4em;
     }
 
     .menu-items-list #login-button {
-        float: left;
         font-size: 1.2em;
     }
 
     .wrap {
-        margin-top: 220px;
+        margin-top: 150px;
     }
   }
