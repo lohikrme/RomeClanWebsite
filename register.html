@@ -22,20 +22,20 @@
 
 </header>
 
-<div class="loginForm">
+<form class="loginForm" action="dbConnection.php" method="post" onsubmit="return validatePasswordRegistration()">
     <h2>Register here! </h2>
     <p class="loginTexts">Email Address: </p>
 
     <div>
         <label><i class="fas fa-envelope"></i></label>
-        <input class="inputs" id="email-address-input" type="email" placeholder="warband.player@gmail.com"> 
+        <input class="inputs" id="email-address-input" name="email" type="email" placeholder="warband.player@gmail.com"> 
     </div>
 
     <p class="loginTexts">Account name: </p>
 
     <div>
         <label><i class="fas fa-user"></i></label>
-        <input class="inputs" id="account-name-input" type="text" placeholder="Totenflak"> 
+        <input class="inputs" id="account-name-input" name="name" type="text" placeholder="Totenflak"> 
     </div>
 
     <p class="loginTexts">Password: </p>
@@ -49,13 +49,15 @@
 
     <div>
         <label><i class="fas fa-lock"></i></label>
-        <input class="inputs" id="password-input2" type="password" placeholder="12345"> 
+        <input class="inputs" id="password-input-repeat" name="password" type="password" placeholder="12345"> 
     </div>
 
-    <button class="buttons1" id="register-button">Register</button>
-    <button class="buttons1" id="clear-button">Clear</button> <br>
+    <button class="buttons1" id="register-button" type="submit">Register</button>
+    <button class="buttons1" id="clear-button" type="reset">Clear</button> <br>
     <a class="buttons2" id="return-login-button" href="login.html">Back to login? </a>
-</div> <!-- loginForm ends -->
+</form> <!-- loginForm ends -->
+
+<script src="validateRegistration.js"></script>
 
 </body>
 </html>
