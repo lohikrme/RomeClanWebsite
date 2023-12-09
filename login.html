@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles/style.css">
     <link rel="stylesheet" href="styles/login.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
     <title>Document</title>
 </head>
 <body id="login">
@@ -23,14 +24,25 @@
 
 <div class="loginForm">
     <h2>Login here! </h2>
+    
     <p class="loginTexts">Account Name or Email Address: </p>
-    <input class="inputs" id="account-name-input"> <br>
+    <div>
+        <label><i class="fas fa-user"></i></label>
+        <input class="inputs" id="account-name-input" type="text" placeholder="warband.player@gmail.com"> 
+    </div>
+
     <p class="loginTexts">Password: </p>
-    <input class="inputs" id="password-input"> <br>
+    <div>
+        <label><i class="fas fa-lock"></i></label>
+        <input class="inputs" id="password-input" type="password" placeholder="12345"> 
+    </div>
+
+    <br>
+
     <button class="buttons1" id="login-button">Login</button>
     <button class="buttons1" id="clear-button">Clear</button> <br>
     <a class="buttons2" id="register-button" href="register.html">Dont have an account yet? </a>
-    <a class="buttons2" id="reset-button" href="login.html">Reset password? </a>
+    <a class="buttons2" id="reset-button" href="login.html">Forgot password? </a>
 </div> <!-- loginForm ends -->
 
 </body>

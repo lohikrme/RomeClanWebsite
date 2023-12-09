@@ -12,29 +12,92 @@
     text-align: center;
 }
 
-.inputs {
-    margin-left: 10px;
+.loginForm div {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    margin-left: 30px;
+}
+
+.loginForm label {
+    display: flex;
+    width: 35px;
+    height: 35px;
+    justify-content: center;
+    align-items: center;
+    background-color: #daf060;
+    color: #ffffff;
+    flex-shrink: 0;
+}
+
+#account-name-input {
+    height: 30px;
+    width: 250px;
+    border: 2px solid black;
 }
 
 #password-input {
     margin-bottom: 20px;
+    height: 30px;
+    width: 250px;
+    border: 2px solid black;
 }
 
 .loginTexts {
-    margin-left: 10px;
+    margin-left: 30px;
 }
 
 .buttons1 {
-    margin-left: 12px;
+    margin-left: 30px;
 }
 
 .buttons2 {
     float: left;
-    margin-top: 100px;
-    margin-left: 10px;
-    
+    margin-top: 60px;
+    margin-left: 25px;
 }
 
 #register-button {
     margin-right: 30px;
+}
+
+@media only screen and (max-width: 1000px) {
+
+
+    .loginForm {
+        margin-top: 450px;
+        width: 200px;
+        min-width: 50vw;
+        height: 420px;
+        min-height: 60vw;
+    }
+
+    .loginForm label {
+        display: flex;
+        width: 24px;
+        min-width: 5vw;
+        height: 24px;
+        min-height: 5vw;
+    }
+  
+    #account-name-input {
+        height: 20px;
+        min-height: 5vw;
+        width: 100px;
+        min-width: 20vw;
+    }
+
+    #password-input {
+        margin-bottom: 20px;
+        height: 20px;
+        min-height: 5vw;
+        width: 100px;
+        min-width: 20vw;
+    }
+
+    .buttons2 {
+        float: left;
+        margin-top: 20px;
+    }
+
 }

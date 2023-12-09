@@ -99,3 +99,30 @@ header ul {
     width: 200px;
     height: 200px;
 }
+
+@media only screen and (max-width: 1000px) {
+
+
+    body {
+        background-position-y: 400px;
+    }
+
+    header {
+      height: 400px;
+    }
+
+    .menu-items-list li {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .menu-items-list #login-button {
+        float: left;
+        font-size: 1.5em;
+        margin-top: 5px;
+    }
+
+    .wrap {
+        margin-top: 420px;
+    }
+  }

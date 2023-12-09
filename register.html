@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles/style.css">
     <link rel="stylesheet" href="styles/register.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
     <title>Document</title>
 </head>
 <body id="login">
@@ -24,13 +25,33 @@
 <div class="loginForm">
     <h2>Register here! </h2>
     <p class="loginTexts">Email Address: </p>
-    <input class="inputs" id="email-address-input"> <br>
+
+    <div>
+        <label><i class="fas fa-envelope"></i></label>
+        <input class="inputs" id="email-address-input" type="email" placeholder="warband.player@gmail.com"> 
+    </div>
+
     <p class="loginTexts">Account name: </p>
-    <input class="inputs" id="account-name-input"> <br>
+
+    <div>
+        <label><i class="fas fa-user"></i></label>
+        <input class="inputs" id="account-name-input" type="text" placeholder="Totenflak"> 
+    </div>
+
     <p class="loginTexts">Password: </p>
-    <input class="inputs" id="password-input"> <br>
+    
+    <div>
+        <label><i class="fas fa-lock"></i></label>
+        <input class="inputs" id="password-input" type="password" placeholder="12345"> 
+    </div>
+
     <p class="loginTexts">Write password again: </p>
-    <input class="inputs" id="password-input2"> <br>
+
+    <div>
+        <label><i class="fas fa-lock"></i></label>
+        <input class="inputs" id="password-input2" type="password" placeholder="12345"> 
+    </div>
+
     <button class="buttons1" id="register-button">Register</button>
     <button class="buttons1" id="clear-button">Clear</button> <br>
     <a class="buttons2" id="return-login-button" href="login.html">Back to login? </a>
