@@ -1,16 +1,14 @@
 <?php
-// Luo tietokantayhteys
-$dsn = "mysql:host=localhost;dbname=users";
-$username = "root";
-$password = "";
-$conn = new PDO($dsn, $username, $password);
-
-// Suorita SQL-kysely
-$sql = "SELECT * FROM registrations";
-$stmt = $conn->prepare($sql);
-$stmt->execute();
-$result = $stmt->fetchAll();
-
-// Tulosta tulos
-print_r($result);
+function openDbConnection() {
+    $dsn = "mysql:host=localhost;dbname=users";
+    $username = "root";
+    $password = "";
+    try {
+        $conn = new PDO($dsn, $username, $password);
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        return $conn;
+    } catch(PDOException $e) {
+        error_log("Connection failed: " . $e->getMessage() . "\n", 3, "errorLog.txt");
+    }
+}
 ?>
