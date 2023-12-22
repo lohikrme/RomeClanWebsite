@@ -1,19 +1,37 @@
 <?php 
 
-// here we send data inside our databases table "registrations".
-// notice that ID will be auto-incremented inside db.
+// before accepting registration, we validate name, email and passwords using 
+// a separate script called 'validateRegistration.php'.
 
-// also notice that we have already opened connection to users db,
-// so this time we dont insert into users but into a table inside users
-// the table is called "registrations"
+// Then, if everything is ok, we will open a database connection to our MySql db,
+// and add the new user (line) there.
 
+require_once (__DIR__ . 'validateRegistration');
 require_once (__DIR__ . '/dbConnection.php');
-$conn = openDbConnection();
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = filter_var($_POST["email"], FILTER_SANITIZE_EMAIL);
-    $name = $conn->quote($_POST["name"]);
-    $password = $conn->quote($_POST["password"]);
+function main() {
+    $registrationIsOK = false;
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $name = trim(strip_tags($_POST["name"]));
+        $email = trim(filter_var($_POST["email"], FILTER_SANITIZE_EMAIL));
+        $password = $_POST["password"];
+
+        // passwords cannot be stripped from tags and special letters, 
+        // so instead we must hash them, and then store safely
+        $hashed_password = password_hash($password1, PASSWORD_DEFAULT);
+
+        $registrationIsOK = validateRegistration($name, $email, $hashed_password);
+
+        if ($registrationIsOK) {
+            AddDataToDB();
+        }
+
+    }
+}
+
+
+function addDataToDB() {
+    $conn = openDbConnection();
 
     try {
 
@@ -30,8 +48,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt -> execute();
 
         echo "<script>alert('Your registration has been succesful!');</script>";
-
-        $ID_number += 1;
     } 
     
     catch(PDOException $e) {
@@ -40,3 +56,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>Hello</p>
+</body>
+</html>

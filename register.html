@@ -22,7 +22,7 @@
 
 </header>
 
-<form class="loginForm" action="scripts/registration.php" method="post" onsubmit="return validatePasswordRegistration()">
+<form class="loginForm" action="scripts/registration.php" method="post" onsubmit="return checkPasswords()">
     <h2>Register here! </h2>
     <p class="loginTexts">Email Address: </p>
 
@@ -42,14 +42,14 @@
     
     <div>
         <label><i class="fas fa-lock"></i></label>
-        <input class="inputs" id="password-input" type="password" placeholder="12345"> 
+        <input class="inputs" id="password1-input" name="password" type="password" placeholder="12345" onkeyup="checkPasswords()"> 
     </div>
 
     <p class="loginTexts">Write password again: </p>
 
     <div>
         <label><i class="fas fa-lock"></i></label>
-        <input class="inputs" id="password-input-repeat" name="password" type="password" placeholder="12345"> 
+        <input class="inputs" id="password2-input" type="password" placeholder="12345" onkeyup="checkPasswords()"> 
     </div>
 
     <button class="buttons1" id="register-button" type="submit">Register</button>
@@ -57,7 +57,43 @@
     <a class="buttons2" id="return-login-button" href="login.html">Back to login? </a>
 </form> <!-- loginForm ends -->
 
-<script src="scripts/validateRegistration.js"></script>
+
+<!-- next script compares that passwords are similar between each others and enough long and complex-->
+<script>
+    function checkPasswords() {
+        var password1IsValid = false;
+        var passwordsAreValid = false;
+
+
+        var password1 = document.getElementById("password1-input");
+        var password2 = document.getElementById("password2-input");
+
+        if (password1 == "" && password2 == "") {
+            password1.style.backgroundColor = "transparent";
+            password2.style.backgroundColor = "transparent";
+        }
+
+        if (password1.value.length >= 10 && password1.value.match(/[a-z]/) && password1.value.match(/[A-Z]/) && password1.value.match(/[0-9]/)) {
+                password1.style.backgroundColor = "green";
+                password1IsValid = true;
+        } 
+        else {
+                password1.style.backgroundColor = "red";
+                password1IsValid = false;
+        }
+
+        if (password1IsValid && password1.value === password2.value) {
+            password2.style.backgroundColor = "green";
+            passwordsAreValid = true;
+        }
+        else if (password1IsValid && password1.value !== password2.value) {
+            password2.style.backgroundColor = "red";
+            passwordsAreValid = false;
+        }
+        return passwordsAreValid;
+        
+    }
+</script>
 
 </body>
 </html>
