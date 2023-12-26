@@ -12,7 +12,8 @@ function openDbConnection() {
         $conn = new PDO($dsn, $username, $password);
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         return $conn;
-    } catch(PDOException $e) {
+    } 
+    catch(PDOException $e) {
         error_log("Connection failed: " . $e->getMessage() . "\n", 3, "errorLog.txt");
     }
 }

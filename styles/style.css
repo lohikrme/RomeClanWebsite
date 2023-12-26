@@ -99,6 +99,16 @@ header ul {
     height: 200px;
 }
 
+.textArea3 {
+    margin-left: 35vw;
+    margin-top: 200px;
+    width: 30vw;
+    height: 300px;
+    background-color: white;
+    padding: 10px;
+    padding-left: 20px;
+}
+
 @media only screen and (max-width: 1000px) {
 
 

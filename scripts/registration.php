@@ -16,21 +16,20 @@ function main() {
         $email = trim(filter_var($_POST["email"], FILTER_SANITIZE_EMAIL));
         $password = $_POST["password"];
 
-        // passwords cannot be stripped from tags and special letters, 
-        // so instead we must hash them, and then store safely
-        $hashed_password = password_hash($password1, PASSWORD_DEFAULT);
+        $registrationIsOK = validateRegistration($name, $email, $password);
 
-        $registrationIsOK = validateRegistration($name, $email, $hashed_password);
-
+        // if name, email and password are ok, then hash the password, and then store all into database:
         if ($registrationIsOK) {
-            AddDataToDB();
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+            AddDataToDB($name, $email, $hashed_password);
         }
-
     }
 }
 
 
-function addDataToDB() {
+function addDataToDB($name, $email, $hashed_password) {
+
+    // open connection to database
     $conn = openDbConnection();
 
     try {
@@ -38,16 +37,14 @@ function addDataToDB() {
         // '$sql_command' variable stores the command to insert new values into the db's registration table: 
         $sql_command = "INSERT INTO registrations (email, name, password) VALUES (:email, :name, :password)";
 
+        // first prepare sql statement, then replace previous :email, :name and :password with their variables
+        $statement = $conn -> prepare($sql_command);
+        $statement -> bindParam(':email', $email);
+        $statement -> bindParam(':name', $name);
+        $statement -> bindParam(':password', $hashed_password);
 
-        $stmt = $conn -> prepare($sql_command);
-
-        $stmt -> bindParam(':email', $email);
-        $stmt -> bindParam(':name', $name);
-        $stmt -> bindParam(':password', $password);
-
-        $stmt -> execute();
-
-        echo "<script>alert('Your registration has been succesful!');</script>";
+        // now all good, just execute the sql statement, which inserts the data into the mysql database
+        $statement -> execute();
     } 
     
     catch(PDOException $e) {
@@ -56,15 +53,3 @@ function addDataToDB() {
 }
 
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <p>Hello</p>
-</body>
-</html>

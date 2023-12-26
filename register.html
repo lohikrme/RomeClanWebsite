@@ -22,30 +22,31 @@
 
 </header>
 
-<form class="loginForm" action="scripts/registration.php" method="post" onsubmit="return checkPasswords()">
+<form class="registerForm" action="scripts/registration.php" method="post" onsubmit="return checkPasswords()">
     <h2>Register here! </h2>
-    <p class="loginTexts">Email Address: </p>
+
+    <p class="registerTexts">Email Address: </p>
 
     <div>
         <label><i class="fas fa-envelope"></i></label>
         <input class="inputs" id="email-address-input" name="email" type="email" placeholder="warband.player@gmail.com"> 
     </div>
 
-    <p class="loginTexts">Account name: </p>
+    <p class="registerTexts">Account name: </p>
 
     <div>
         <label><i class="fas fa-user"></i></label>
         <input class="inputs" id="account-name-input" name="name" type="text" placeholder="Totenflak"> 
     </div>
 
-    <p class="loginTexts">Password: </p>
+    <p class="registerTexts">Password: </p>
     
     <div>
         <label><i class="fas fa-lock"></i></label>
         <input class="inputs" id="password1-input" name="password" type="password" placeholder="12345" onkeyup="checkPasswords()"> 
     </div>
 
-    <p class="loginTexts">Write password again: </p>
+    <p class="registerTexts">Write password again: </p>
 
     <div>
         <label><i class="fas fa-lock"></i></label>
@@ -59,6 +60,7 @@
 
 
 <!-- next script compares that passwords are similar between each others and enough long and complex-->
+<!-- also the script uses Ajax to stay in the current register.html and only send data to php files-->
 <script>
     function checkPasswords() {
         var password1IsValid = false;
@@ -90,10 +92,29 @@
             password2.style.backgroundColor = "red";
             passwordsAreValid = false;
         }
-        return passwordsAreValid;
-        
-    }
-</script>
+
+        // if we would direct user to php files, we would write here here 'return passwordsAreValid'
+        // but now we just check if passwords are ok, and then send data to server using AJAX
+        if (passwordsAreValid) {
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'scripts/registration.php', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+            xhr.send(new FormData(document.querySelector('.registerForm')));
+
+            xhr.onload = function() {
+                // if php file answers that received data is OK:
+                if (xhr.status == 200) {
+                    alert("Rekistration succesful!");
+                }
+                else {
+                    alert("Registration failed!");
+                }
+            }
+        }
+        // prevent standard send of form to avoid changing web page
+        return false; 
+}
+</script> <!-- checking password and sending data to server scripts end-->
 
 </body>
 </html>

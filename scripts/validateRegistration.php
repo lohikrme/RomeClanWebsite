@@ -92,12 +92,44 @@ function checkEmail($email) {
 
 }
 
-function checkPasswords($password1, $password2) {
-    // make sure that both of the passwords are not:
+function checkPasswords($password) {
+    // make sure that password is not:
     // 1. empty 
-    // 2. hackering
-    // 3. different between each others
-    // 4. length must be at least 10, must contain at least 1 large and 1 small letter and 1 number
+    // 2. length must be at least 10, must contain at least 1 large and 1 small letter and 1 number
+    //    this is alrdy done by js script in register.html, but we dont want bugs with missing passwords...
+    // 3. we cannot prevent that password does not contain hackering, because special letters must be allowed...
+    //    but security is handled by hashing the password (inside registration.php) before store into database
+
+    // check if password is empty
+    if ($password == "") {
+        return false;
+    }
+
+    // check that password contains required 10 letters, 1 large, 1 small, 1 number:
+    if (strlen($password) < 10) {
+        return false;
+    }
+
+    // contains at least 1 large letter
+    if (!preg_match('/[A-Z]/', $password)) {
+        return false;
+    }
+
+    // contains at least 1 small letter
+    if (!preg_match('/[a-z]/', $password)) {
+        return false;
+    }
+
+    // contains at least 1 number
+    if (!preg_match('/[0-9]/', $password)) {
+        return false;
+    }
+
+    // if all good, return true
+    return true;
+
+
+
 }
 
 
