@@ -53,10 +53,18 @@
         <input class="inputs" id="password2-input" type="password" placeholder="12345" onkeyup="checkPasswords()"> 
     </div>
 
+    <p id="captcha-text" class="registerTexts">Before you are registered, write the following code in the last input field: </p>
+
+    <img id="captcha-image" src="scripts/captcha.php" alt="CAPTCHA">
+    <br>
+    <input id="captcha-input" type="text" placeholder="1A2B3C" name="captcha-code">
+    <br>
+
     <button class="buttons1" id="register-button" type="submit">Register</button>
     <button class="buttons1" id="clear-button" type="reset">Clear</button> <br>
     <a class="buttons2" id="return-login-button" href="login.html">Back to login? </a>
 </form> <!-- loginForm ends -->
+
 
 
 <!-- next script compares that passwords are similar between each others and enough long and complex-->
