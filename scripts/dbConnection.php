@@ -8,11 +8,14 @@
 
 function openDbConnection() {
 
-    require_once (__DIR__ . 'passwords.php'); // import passwords, username, etc for database
+    require_once ('passwords.php'); // import passwords, username, etc for database
+
+    // notice array form: $name => $databaseUsername, $password => $databasePassword
+    $nameAndPass = importDbNameAndPassword();
 
     $dsn = "mysql:host=localhost;dbname=users";
-    $username = $database_username;
-    $password = $database_password;
+    $username = $nameAndPass['name'];
+    $password = $nameAndPass['password'];
     try {
         $conn = new PDO($dsn, $username, $password);
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

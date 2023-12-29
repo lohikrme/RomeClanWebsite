@@ -4,11 +4,11 @@ require_once (__DIR__ . '/dbConnection.php');
 
 // fetch variable data and run here other functions to validate them 
 // if everything is fine, return true, so that registration.php can continue
-function validateRegistration($name, $email, $password1, $password2) {
+function validateRegistration($name, $email, $password) {
 
     $nameIsValid = checkName($name);
     $emailIsValid = checkEmail($email);
-    $passwordsAreValid = checkPasswords($password1, $password2);
+    $passwordsAreValid = checkPasswords($password);
 
     if ($nameIsValid && $emailIsValid && $passwordsAreValid) {
         return true;
@@ -25,10 +25,14 @@ function checkName($name) {
 
     // check if name is empty
     if ($name == "") {
+        // alert user name is empty
+        echo "<input type='hidden' id='emptyName' value='true'>";
         return false;
     }
     // next letters may be related to SQL-injections or similar:
-    else if (preg_match('/[\'^£$%&*()}{#~?><>,|=+¬-]/', $name)) {
+    else if (preg_match('/[\'^£$%&*()}{#~?><>,|=+¬]/', $name)) {
+        // alert user only _ and - and . are allowed from special letters
+
         return false;
     }
 
@@ -37,15 +41,16 @@ function checkName($name) {
         $conn = openDbConnection();
 
         // prepare sql statement. place '?' in place where $name should be
-        // then use command bind_param, which replaces '?' with its second parameter
+        // then use command bindParam, which replaces '?' with its second parameter
         // only then execute the sql statement and get its result
-        $statement = $conn -> prepare("SELECT * FROM users WHERE name = ?");
-        $statement -> bind_param("s", $name);
+        $statement = $conn -> prepare("SELECT * FROM registrations WHERE name = :name");
+        $statement -> bindParam(":name", $name);
         $statement -> execute();
-        $result = $statement -> get_result();
 
         // if sql statement found more than one row, that means name already exists:
-        if ($result -> num_rows > 0) {
+        if ($statement -> rowCount() > 0) {
+            // alert user that name already exists
+
             return false;
         }
 
@@ -63,10 +68,14 @@ function checkEmail($email) {
 
     // check if email is empty
     if ($email == "") {
+        // alert user that email address is empty
+
         return false;
     }
     // next letters may be related to SQL-injections or similar:
-    else if (preg_match('/[\'^£$%&*()}{#~?><>,|=+¬-]/', $email)) {
+    else if (preg_match('/[\'^£$%&*()}{#~?><>,|=+¬]/', $email)) {
+        // alert user that only _ and - and . are allowed from special letters
+
         return false;
     }
 
@@ -77,13 +86,14 @@ function checkEmail($email) {
         // prepare sql statement. place '?' in place where $name should be
         // then use command bind_param, which replaces '?' with its second parameter
         // only then execute the sql statement and get its result
-        $statement = $conn -> prepare("SELECT * FROM users WHERE email = ?");
-        $statement -> bind_param("s", $email);
+        $statement = $conn -> prepare("SELECT * FROM registrations WHERE email = :email");
+        $statement -> bindParam(":email", $email);
         $statement -> execute();
-        $result = $statement -> get_result();
 
         // if sql statement found more than one row, that means name already exists:
-        if ($result -> num_rows > 0) {
+        if ($statement -> rowCount() > 0) {
+            // alert user email has already been taken
+
             return false;
         }
 
@@ -102,26 +112,36 @@ function checkPasswords($password) {
 
     // check if password is empty
     if ($password == "") {
+        // alert user password was empty
+        
         return false;
     }
 
-    // check that password contains required 10 letters, 1 large, 1 small, 1 number:
+    // check that password length is at least 10 letters,:
     if (strlen($password) < 10) {
+        // alert user password was too short
+
         return false;
     }
 
     // contains at least 1 large letter
     if (!preg_match('/[A-Z]/', $password)) {
+        // alert user password was missing a large letter
+
         return false;
     }
 
     // contains at least 1 small letter
     if (!preg_match('/[a-z]/', $password)) {
+        // alert user password was missing a small letter
+
         return false;
     }
 
     // contains at least 1 number
     if (!preg_match('/[0-9]/', $password)) {
+        // alert user password was missing a number
+
         return false;
     }
 
