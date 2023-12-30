@@ -107,9 +107,11 @@
         return passwordsAreValid;
     }
 
-    // if we would direct user to php files, we would write here here 'return passwordsAreValid'
-    // but now we just listen when submit has been clicked, 
-    // then check if passwords are ok, and then send data to server using AJAX
+    // because we do not want user to open a php file, we dont write here 'return passwordsAreValid'
+    // instead we use js ajax to send and receive data to and from the php file.
+    // php will send a status to js script, and js uses this server status to alert user.
+    // 201 = registration has been succesfull.
+    // 401-407 = there is a problem with registration due to inputs or server issue.
     document.getElementById('register-button').addEventListener('click', function(event) {
         if (checkPasswords()) {
             var xhr = new XMLHttpRequest();
@@ -118,28 +120,39 @@
             xhr.send(formData);
 
             xhr.onload = function() {
-                // if php file answers that received data is OK:
+                // if php file answers that received form is good and user has been added to the database:
                 if (xhr.status == 201) {
                     window.location.href = "registration-successful.html";
-                } else {
-                    alert("Registration was not successful! Probably your name or email was already taken. Other possible reasons are: name or email contained other special letters outside - _ . and @. If problem persists, contact support at 'rome.lh.bl@gmail.com'.");
+                } 
+                // if there are a variety of problems with user inputs
+                else if (xhr.status == 401) {
+                    alert("NAME is empty or contains banned special letters. Only allowed special letters for name are dot(.) underline(_) and line(-).");
+                }
+                else if (xhr.status == 402) {
+                    alert("This NAME has already been taken!");
+                }
+                else if (xhr.status == 403) {
+                    alert("EMAIL ADDRESS is empty or contains banned special letters. Only allowed special letters for email are dot(.) underline(_) line(-) and at(@).");
+                }
+                else if (xhr.status == 404) {
+                    alert("This EMAIL ADDRESS has already been taken!");
+                }
+                else if (xhr.status == 405) {
+                    alert("Your password is not following rules. Passwords must be at least length of 10 and they must contain at least 1 number, 1 small letter and 1 big letter.");
+                }
+                else if (xhr.status == 406) {
+                    alert("You have given an incorrect CAPTCHA code.");
+                }
+                // if the problem is not with user inputs but with server, such as adding user to the database
+                else if (xhr.status == 407) {
+                    alert("There is a problem with registration due to server issues. Please try again later! But if the problem persists, contact support at 'rome.lh.bl@gmail.com'.");
                 }
             }
         }
 
-        // prevent standard send of form to avoid changing web page
+        // prevent the default way of sending form with POST protocol to avoid opening the php file
         event.preventDefault();
     });
-</script> <!-- scripts end which checks password and sends data forward-->
-
-<!-- next will be the scripts that contain hidden alerts. they are activates from validateRegistration.php if issues are faced -->
-<script>
-    window.onload = function() {
-        var isEmpty = document.getElementById('emptyName');
-        if (isEmpty && isEmpty.value == 'true') {
-            alert("Name is empty");
-        }
-    }
 </script>
 
 </body>

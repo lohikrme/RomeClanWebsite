@@ -10,18 +10,11 @@ require_once ('validateRegistration.php'); // this checks name, email, password 
 require_once ('dbConnection.php'); // this opens mysql database
 
 // start the script
-$registrationSuccessful = main();
-if ($registrationSuccessful) {
-    http_response_code(201);
-}
-else {
-    http_response_code(400);
-}
+main();
 
 // main uses other methods to validate registration, confirm registration via email and to insert data into db
 function main() {
     session_start(); // sstart session to receive captcha from session
-    $registrationIsOK = false;
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $name = trim(strip_tags($_POST["name"]));
         $email = trim(filter_var($_POST["email"], FILTER_SANITIZE_EMAIL));
@@ -29,28 +22,75 @@ function main() {
 
         $captcha_code = trim(strip_tags($_POST["captcha-code"]));
 
+        // if user writes a wrong captcha code, info user and exit:
         if ($captcha_code != $_SESSION["captcha"]) {
+            http_response_code(406);
             exit();
         }
 
-        $registrationIsOK = validateRegistration($name, $email, $password);
+        // check if name, email and password are ok:
+        $registrationInputsAreOK = validateRegistration($name, $email, $password);
 
         // if name, email and password are ok, hash the password, and store all variables into the database:
-        if ($registrationIsOK) {
+        if ($registrationInputsAreOK) {
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
             $userAdded = AddUserToDB($name, $email, $hashed_password);
-            // if registration is ok and user has been added succesfully, main function returns true
+            // if registration is ok and user has been added succesfully, info user and exit code:
             if ($userAdded) {
-                return true;
+                http_response_code(201);
+                exit();
             }
-            // if user is not added, main function returns false
+            // if for some reason we were not able to add user, info user there is some problem and ask them to try again later:
             else  {
-                return false;
+                http_response_code(407);
+                exit();
             }
         }
-        // if registration is not ok, main function returns false
+        // if name, email or password are banned, check out in order what is the problem and info the user:
         else {
-            return false;
+            // check if name is empty and alert user
+            $nameIsNotEmpty = checkNameIsNotEmpty($name);
+            if ($nameIsNotEmpty == false) {
+                http_response_code(401);
+                exit();
+            }
+            // check if name contains banned letters and alert user
+            $nameWithoutBannedLetters = checkNameWithoutBannedLetters($name);
+            if ($nameWithoutBannedLetters == false) {
+                http_response_code(401);
+                exit();
+            }
+            // check if name is already taken and alert user
+            $nameIsNotTaken = checkNameIsNotTaken($name);
+            if ($nameIsNotTaken == false) {
+                http_response_code(402);
+                exit();
+            }
+            // check if email address is empty and alert user
+            $emailIsNotEmpty = checkEmailIsNotEmpty($email);
+            if ($emailIsNotEmpty == false) {
+                http_response_code(403);
+                exit();
+            }
+            // check if email address contains banned letters and alert user
+            $emailWithoutBannedLetters = checkEmailWithoutBannedLetters($email);
+            if ($emailWithoutBannedLetters == false) {
+                http_response_code(403);
+                exit();
+            }
+            // check if email address is already taken and alert user
+            $emailIsNotTaken = checkEmailIsNotTaken($email);
+            if ($emailIsNotTaken == false) {
+                http_response_code(404);
+                exit();
+            }
+
+            // check if password has issues and alert the user
+            $passwordIsOk = checkPasswordIsOk($password);
+            if ($passwordIsOk == false) {
+                http_response_code(405);
+                exit();
+            }
         }
     }
 }
