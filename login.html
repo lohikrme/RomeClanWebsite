@@ -12,29 +12,34 @@
     
 <header>
 
-    <h1>Tiamat Clan Website</h1>
-    <ul class="menu-items-list">
-        <li id="main-button"><a href="index.html">Main</a></li>
-        <li id="events-button"><a href="events.html">Events</a></li>
-        <li id="forum-button"><a href="forum.html">Forum</a></li>
-        <li id="login-button"><a href="login.html">Log in!</a></li>
-    </ul>
+    <div class="header-left">
+        <img id="logo" src="images/logo.png">
+    </div>
+    <div class="header-right">
+        <h1>Rome Clan Website</h1>
+        <ul class="menu-items-list">
+            <li id="main-button"><a href="index.html">Main</a></li>
+            <li id="events-button"><a href="events.html">Events</a></li>
+            <li id="forum-button"><a href="forum.html">Forum</a></li>
+            <li id="login-button"><a href="login.html">Log in!</a></li>
+        </ul>
+    </div>
 
 </header>
 
 <div class="loginForm">
     <h2>Login here! </h2>
     
-    <p class="loginTexts">Account Name or Email Address: </p>
+    <p class="loginTexts">Email Address: </p>
     <div>
         <label><i class="fas fa-user"></i></label>
-        <input class="inputs" id="account-name-input" type="text" placeholder="warband.player@gmail.com"> 
+        <input class="inputs" id="login-email-input" type="text" placeholder="warband.player@gmail.com" name="login-email"> 
     </div>
 
     <p class="loginTexts">Password: </p>
     <div>
         <label><i class="fas fa-lock"></i></label>
-        <input class="inputs" id="password-input" type="password" placeholder="12345"> 
+        <input class="inputs" id="login-password-input" type="password" placeholder="12345" name="login-password"> 
     </div>
 
     <br>
@@ -45,5 +50,43 @@
     <a class="buttons2" id="reset-button" href="login.html">Forgot password? </a>
 </div> <!-- loginForm ends -->
 
+
+<script>
+    // as we used in register.html, we also use in login.html file 
+    // js ajax to transfer data from html to server (login.php)
+    // while not changing the page... if there are problems
+    // such as no email found, we will receive a HTTP status
+    // from the php file and with that alert user correspondingly
+    document.getElementById('login-button').addEventListener('click', function(event) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'scripts/login.php', true);
+        var formData = new FormData(document.querySelector('.loginForm'));
+        xhr.send(formData);
+        // wait asynchronously until php responds...
+        xhr.onload = function() {
+            // if login has been successful open a new page...
+            if (xhr.status == 201) {
+                window.location.href = "logged-in.html";
+            }
+            // if email was not found alert user
+            if (xhr.status == 401) {
+                alert("EMAIL was not found. Maybe a typo? Or maybe not registered yet? Contact rome.lh.bl@gmail.com if the problem persists...");
+            }
+            // if email was found, but given password does not match it
+            if (xhr.status == 402) {
+                alert("PASSWORD is wrong! Your email address has registered an account, but the password you gave is wrong. If you have forgotten your password, please send email to rome.lh.bl@gmail.com");
+            }
+            // if unexpected error occurred
+            if (xhr.status == 403) {
+                alert("An unexpected ERROR occurred. Please try again later. If problem persists, send email to rome.lh.bl@gmail.com");
+            }
+        }
+        // prevent the default way of sending form with POST protocol to avoid opening the php file
+        event.preventDefault();
+    });
+</script>
+
+
 </body>
 </html>
+

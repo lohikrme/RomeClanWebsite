@@ -1,0 +1,5 @@
+CAPTCHA code requires to work:
+activate GD library by opening php.ini file
+and then remove the semicolon(;) from the beginning of
+;extension=gd.
+Then restart the server and GF library will be in usage.

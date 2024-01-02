@@ -91,6 +91,14 @@ function main() {
                 http_response_code(405);
                 exit();
             }
+
+            // check if database table registrations is full and alert the user
+            $registrationsHasRoom = checkRegistrationsHasRoom();
+            if ($registrationsHasRoom == false) {
+                http_response_code(407);
+                error_log("Mistake adding user into database: Database is FULL! \n", 3, "errorLog.txt");
+                exit();
+            }
         }
     }
 }

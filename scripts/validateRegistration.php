@@ -19,8 +19,11 @@ function validateRegistration($name, $email, $password) {
     // check password is ok
     $passwordIsOk = checkPasswordIsOk($password);
 
+    // check registrations table is not full:
+    $registrationsHasRoom = checkRegistrationsHasRoom();
+
     // if everything is ok, return true
-    if ($nameIsNotEmpty && $nameWithoutBannedLetters && $nameIsNotTaken && $emailIsNotEmpty && $emailWithoutBannedLetters && $emailIsNotTaken && $passwordIsOk) {
+    if ($nameIsNotEmpty && $nameWithoutBannedLetters && $nameIsNotTaken && $emailIsNotEmpty && $emailWithoutBannedLetters && $emailIsNotTaken && $passwordIsOk && $registrationsHasRoom) {
         return true;
     }
 
@@ -146,6 +149,24 @@ function checkPasswordIsOk($password) {
     }
 
     // if all good, return true
+    return true;
+}
+
+
+//-------------------REGISTRATIONS----------------------------------
+//--------------------HAVE ROOM----------------------------------
+
+function checkRegistrationsHasRoom() {
+    // open database connection
+    $conn = openDbConnection();
+    // prepare and execute SQL statement
+    $statement = $conn -> prepare("SELECT * FROM registrations");
+    $statement -> execute();
+    // if registrations table has over 10000 lines, do not allow registration
+    if ($statement -> rowCount() > 10000) {
+        return false;
+    }
+    // if all good allow registration
     return true;
 }
 
