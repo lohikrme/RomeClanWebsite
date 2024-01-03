@@ -23,7 +23,7 @@ function validateLogin() {
 
     //---------------------- PROBLEMS ------------------
     // if email was not found, alert user
-    if (statement -> rowCount() == 0) {
+    if ($statement -> rowCount() == 0) {
         http_response_code(401);
         exit();
     }
@@ -42,7 +42,7 @@ function validateLogin() {
     // ------------------- LOGIN SUCCESSFULL!------------------------------
     // if stored password and now given password match, activate Login by storing it to session
     if(password_verify($login_password, $user['password'])) {
-        activateLogin($user['id']);
+        activateLogin($user['ID']);
         http_response_code(201);
         exit();
     }
@@ -62,8 +62,11 @@ function activateLogin($id) {
     session_start();
     // create a global session varible for the id
     $_SESSION['user_id'] = $id;
-    // also save time of login
+    // store time of login as last activity
     $_SESSION['LAST_ACTIVITY'] = time();
+    // expire time will be 1 hours = 1*60*60
+    // so if person doesnt load any of the main pages for 1 hour, they must login again
+    $_SESSION['expire_time'] = 1*60*60;
 }
 
 

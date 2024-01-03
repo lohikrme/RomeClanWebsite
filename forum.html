@@ -41,5 +41,17 @@
     </div> <!-- textArea2 ends -->
 </div> <!-- wrap ends-->
 
+<!-- next scripts activate jquery library, and then calls updateLoginStatus.php file
+idea is to check if user should still stay logged in, and if need, log out -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(document).ready(function() {
+    $.ajax({
+        url: 'scripts/updateLoginStatus.php', // korvaa 'scripts/updateLoginStatus.php' tiedostonimellä ja polulla, jossa päivität istunnon
+        type: 'POST'
+    });
+});
+</script>
+
 </body>
 </html>

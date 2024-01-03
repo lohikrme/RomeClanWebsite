@@ -124,6 +124,16 @@ header ul {
     padding-left: 20px;
 }
 
+.textArea4 {
+    margin-left: 20vw;
+    margin-top: 200px;
+    width: 60vw;
+    height: 1000px;
+    background-color: white;
+    padding: 10px;
+    padding-left: 20px;
+}
+
 @media only screen and (max-width: 1000px) {
 
 
@@ -196,6 +206,10 @@ header ul {
     .textArea2 {
         width: 150px;
         height: 250px;
+    }
+
+    .textArea4 {
+        margin-top: 300px;
     }
     
 }

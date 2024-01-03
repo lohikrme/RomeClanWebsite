@@ -27,7 +27,7 @@
 
 </header>
 
-<div class="loginForm">
+<form class="loginForm" action="scripts/login.php" method="post">
     <h2>Login here! </h2>
     
     <p class="loginTexts">Email Address: </p>
@@ -47,16 +47,26 @@
     <button class="buttons1" id="login-button">Login</button>
     <button class="buttons1" id="clear-button">Clear</button> <br>
     <a class="buttons2" id="register-button" href="register.html">Dont have an account yet? </a>
-    <a class="buttons2" id="reset-button" href="login.html">Forgot password? </a>
-</div> <!-- loginForm ends -->
+    <a class="buttons2" id="forgot-password-button" href="login.html">Forgot password? </a>
+</form> <!-- loginForm ends -->
+
+
+
 
 
 <script>
-    // as we used in register.html, we also use in login.html file 
-    // js ajax to transfer data from html to server (login.php)
+    // this script listens if forgot-password-button is pressed, and gives user
+    // an alert that tells to contact support at rome.lh.bl@gmail.com
+    document.getElementById('forgot-password-button').addEventListener('click', function(event) {
+        alert("If you have forgotten password, please contact support at address rome.lh.bl@gmail.com. Please send the message from the same email address that you used to registeration.")
+    });
+</script>
+
+<script>
+    // we use this script to send login data forward to the login.php file
     // while not changing the page... if there are problems
     // such as no email found, we will receive a HTTP status
-    // from the php file and with that alert user correspondingly
+    // from the php file and we will alert the user correspondingly
     document.getElementById('login-button').addEventListener('click', function(event) {
         var xhr = new XMLHttpRequest();
         xhr.open('POST', 'scripts/login.php', true);
@@ -81,8 +91,9 @@
                 alert("An unexpected ERROR occurred. Please try again later. If problem persists, send email to rome.lh.bl@gmail.com");
             }
         }
-        // prevent the default way of sending form with POST protocol to avoid opening the php file
-        event.preventDefault();
+         // prevent the default way of sending form with POST protocol to avoid opening the php file
+         event.preventDefault();
+        
     });
 </script>
 
