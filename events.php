@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles/style.css">
-    <!-- add jquery library from js to later control login status-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
     <title>Document</title>
 </head>
 <body id="events">
@@ -21,9 +21,8 @@
             <li id="main-button"><a href="index.php">Main</a></li>
             <li id="events-button"><a href="events.php">Events</a></li>
             <li id="forum-button"><a href="forum.php">Forum</a></li>
+            <?php createLinkToOwnInformation(); ?> <!-- this script creates a link to users own information -->
             <?php createLogInButton(); ?> <!-- this script creates list-item that changes depending logged in or out -->
-
-            
         </ul>
     </div>
 
@@ -59,7 +58,9 @@ $(document).ready(function() {
 <!-- Next php script will transform login button to logout button if user has been logged in-->
 <?php
 function createLogInButton() {
-    session_start(); // Aloita istunto
+    if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+    }
 
     // check if user is logged in (has SESSION variable called user_id):
     if (isset($_SESSION['user_id'])) { 
@@ -70,8 +71,20 @@ function createLogInButton() {
         echo '<li id="login-button"><a href="login.php">Log in!</a></li>';
     }
 }
-
 ?>
+
+<!-- Next php script creates an icon user can press to get to see and change their own information -->
+<?php
+function createLinkToOwnInformation() {
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+    if (isset($_SESSION['user_id'])) {
+        echo "<a id='own-info-button' href='../user/own-information.php'><i class='fas fa-user'></i>Own Information</a>";
+    }
+}
+?>
+
 
 </body>
 </html>

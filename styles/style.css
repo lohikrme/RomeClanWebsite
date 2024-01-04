@@ -83,6 +83,14 @@ header ul {
     color: rgb(42, 240, 55)
 }
 
+#own-info .menu-items-list #own-info-button {
+    color: rgb(42, 240, 55)
+}
+
+.menu-items-list #login-button:hover {
+    color: rgb(42, 240, 55);
+}
+
 .menu-items-list #login-button {
     font-family: 'Times New Roman', Times, serif;
     float: right;
@@ -91,8 +99,10 @@ header ul {
     font-weight:bolder;
 }
 
-.menu-items-list #login-button:hover {
-    color: rgb(42, 240, 55);
+.menu-items-list #own-info-button {
+    position: absolute;
+    right: 9vw;
+    top: 8vh;
 }
 
 .textArea {
