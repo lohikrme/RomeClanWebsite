@@ -1,11 +1,19 @@
 <?php
 
-require_once('dbConnection.php');
+require_once('dbConnection-B.php');
 
 // start script
 validateLogin();
 
 function validateLogin() {
+    // start session to receive global variables
+    session_start();
+    // make sure that post method is being used to avoid unnecessary bugs
+    if ($_SERVER["REQUEST_METHOD"] != "POST") {
+        http_response_code(403);
+        error_log("Unexpected error occurred in login.php! It was not sent via POST method. \n", 3, "errorLog.txt");
+        exit();
+    }
     // bring email and password from loginForm POST protocol:
     $login_email = trim(filter_var($_POST["login-email"], FILTER_SANITIZE_EMAIL));
     $login_password = $_POST["login-password"];

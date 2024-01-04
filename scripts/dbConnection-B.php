@@ -8,7 +8,7 @@
 
 function openDbConnection() {
 
-    require_once ('passwords.php'); // import passwords, username, etc for database
+    require_once ('passwords-B.php'); // import passwords, username, etc for database
 
     // notice array form: $name => $databaseUsername, $password => $databasePassword
     $nameAndPass = importDbNameAndPassword();

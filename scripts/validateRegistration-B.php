@@ -1,6 +1,6 @@
 <?php
 
-require_once (__DIR__ . '/dbConnection.php'); 
+require_once (__DIR__ . '/dbConnection-B.php'); 
 
 // fetch variable data and run here other functions to validate them 
 // if everything is fine, return true, so that registration.php can continue

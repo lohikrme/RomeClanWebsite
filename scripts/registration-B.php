@@ -6,8 +6,8 @@
 // Then, if everything is ok, we will open a database connection to our MySql db,
 // and add the new user (line) there.
 
-require_once ('validateRegistration.php'); // this checks name, email, password are ok
-require_once ('dbConnection.php'); // this opens mysql database
+require_once ('validateRegistration-B.php'); // this checks name, email, password are ok
+require_once ('dbConnection-B.php'); // this opens mysql database
 
 // start the script
 main();

@@ -18,10 +18,10 @@
     <div class="header-right">
         <h1>Rome Clan Website</h1>
         <ul class="menu-items-list">
-            <li id="main-button"><a href="index.html">Main</a></li>
-            <li id="events-button"><a href="events.html">Events</a></li>
-            <li id="forum-button"><a href="forum.html">Forum</a></li>
-            <li id="login-button"><a href="login.html">Log in!</a></li>
+            <li id="main-button"><a href="index.php">Main</a></li>
+            <li id="events-button"><a href="events.php">Events</a></li>
+            <li id="forum-button"><a href="forum.php">Forum</a></li>
+            <?php createLogInButton(); ?> <!-- this script creates list-item that changes depending logged in or out -->
         </ul>
     </div>
 
@@ -60,21 +60,21 @@
 
     <p id="captcha-text" class="registerTexts">Before you are registered, write the following code in the last input field: </p>
 
-    <img id="captcha-image" src="scripts/captcha.php" alt="CAPTCHA">
+    <img id="captcha-image" src="scripts/captcha-B.php" alt="CAPTCHA">
     <br>
     <input id="captcha-input" type="text" placeholder="1A2B3C" name="captcha-code">
     <br>
 
     <button class="buttons1" id="register-button" type="submit">Register</button>
     <button class="buttons1" id="clear-button" type="reset">Clear</button> <br>
-    <a class="buttons2" id="return-login-button" href="login.html">Back to login? </a>
+    <a class="buttons2" id="return-login-button" href="login.php">Back to login? </a>
 </form> <!-- loginForm ends -->
 
 
 
 <!-- next script compares that passwords are similar between each others and enough long and complex-->
 <!-- adding color hints to users so they know to fix their passwords until they are ok-->
-<!-- also the script uses Ajax to stay in the current register.html and only send data to php files-->
+<!-- also the script uses Ajax to stay in the current register.php and only send data to php files-->
 <script>
     function checkPasswords() {
         var password1IsValid = false;
@@ -120,14 +120,14 @@
     document.getElementById('register-button').addEventListener('click', function(event) {
         if (checkPasswords()) {
             var xhr = new XMLHttpRequest();
-            xhr.open('POST', 'scripts/registration.php', true);
+            xhr.open('POST', 'scripts/registration-B.php', true);
             var formData = new FormData(document.querySelector('.registerForm'));
             xhr.send(formData);
 
             xhr.onload = function() {
                 // if php file answers that received form is good and user has been added to the database:
                 if (xhr.status == 201) {
-                    window.location.href = "registration-successful.html";
+                    window.location.href = "registration-successful.php";
                 } 
                 // if there are a variety of problems with user inputs
                 else if (xhr.status == 401) {
@@ -159,6 +159,25 @@
         event.preventDefault();
     });
 </script>
+
+
+
+<!-- Next php script will transform login button to logout button if user has been logged in-->
+<?php
+function createLogInButton() {
+    session_start(); // Aloita istunto
+
+    // check if user is logged in (has SESSION variable called user_id):
+    if (isset($_SESSION['user_id'])) { 
+        // if user is logged in, login button reads log out! and clicking it logs user out
+        echo '<li id="login-button"><a href="logged-out.php">Log out!</a></li>';
+    } else {
+        // user is not logged in, so use the original login-button, which already exists in html code
+        echo '<li id="login-button"><a href="login.php">Log in!</a></li>';
+    }
+}
+
+?>
 
 </body>
 </html>

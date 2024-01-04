@@ -17,17 +17,38 @@
     <div class="header-right">
         <h1>Rome Clan Website</h1>
         <ul class="menu-items-list">
-            <li id="main-button"><a href="../index.html">Main</a></li>
-            <li id="events-button"><a href="../events.html">Events</a></li>
-            <li id="forum-button"><a href="../forum.html">Forum</a></li>
-            <li id="login-button"><a href="../login.html">Log in!</a></li>
+            <li id="main-button"><a href="../index.php">Main</a></li>
+            <li id="events-button"><a href="../events.php">Events</a></li>
+            <li id="forum-button"><a href="../forum.php">Forum</a></li>
+            <?php createLogInButton(); ?> <!-- this script creates list-item that changes depending logged in or out -->
         </ul>
     </div>
 
 </header>
 
 <div class="textArea3">
-    <p>This page shows your personal information! You may also change your name, email or password from here.</p> 
+    <p>You may change your email here.</p> 
+    <form>
+        <div class="old-email">
+            <label>Old Email: </label>
+            <input type="email" placeholder="warband.player@gmail.com">
+        </div>
+        <br>
+        <div class="new-email">
+            <label>New Email: </label>
+            <input type="email" placeholder="warband.newplayer2@gmail.com">
+        </div>
+        <br>
+        <div class="password">
+            <label>Password:</label>
+            <input type="password" placeholder="12345...">
+        </div>
+        <br>
+        <div class="submit">
+            <button id="submit" type="submit">Submit</button>
+            <button id="clear" type="reset">Clear</button>
+        </div>
+    </form>
 </div>
 
 
@@ -37,11 +58,29 @@ idea is to check if user should still stay logged in, and if need, log out -->
 <script>
 $(document).ready(function() {
     $.ajax({
-        url: 'scripts/updateLoginStatus.php', // korvaa 'scripts/updateLoginStatus.php' tiedostonimellä ja polulla, jossa päivität istunnon
+        url: 'scripts/updateLoginStatus-B.php',
         type: 'POST'
     });
 });
 </script>
+
+
+<!-- Next php script will transform login button to logout button if user has been logged in-->
+<?php
+function createLogInButton() {
+    session_start(); // Aloita istunto
+
+    // check if user is logged in (has SESSION variable called user_id):
+    if (isset($_SESSION['user_id'])) { 
+        // if user is logged in, login button reads log out! and clicking it logs user out
+        echo '<li id="login-button"><a href="logged-out.php">Log out!</a></li>';
+    } else {
+        // user is not logged in, so use the original login-button, which already exists in html code
+        echo '<li id="login-button"><a href="login.php">Log in!</a></li>';
+    }
+}
+
+?>
 
 </body>
 </html>

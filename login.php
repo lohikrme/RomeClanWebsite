@@ -18,10 +18,10 @@
     <div class="header-right">
         <h1>Rome Clan Website</h1>
         <ul class="menu-items-list">
-            <li id="main-button"><a href="index.html">Main</a></li>
-            <li id="events-button"><a href="events.html">Events</a></li>
-            <li id="forum-button"><a href="forum.html">Forum</a></li>
-            <li id="login-button"><a href="login.html">Log in!</a></li>
+            <li id="main-button"><a href="index.php">Main</a></li>
+            <li id="events-button"><a href="events.php">Events</a></li>
+            <li id="forum-button"><a href="forum.php">Forum</a></li>
+            <?php createLogInButton(); ?> <!-- this script creates list-item that changes depending logged in or out -->
         </ul>
     </div>
 
@@ -44,10 +44,10 @@
 
     <br>
 
-    <button class="buttons1" id="login-button">Login</button>
+    <button class="buttons1" id="send-form-button">Login</button>
     <button class="buttons1" id="clear-button">Clear</button> <br>
-    <a class="buttons2" id="register-button" href="register.html">Dont have an account yet? </a>
-    <a class="buttons2" id="forgot-password-button" href="login.html">Forgot password? </a>
+    <a class="buttons2" id="register-button" href="register.php">Dont have an account yet? </a>
+    <a class="buttons2" id="forgot-password-button" href="login.php">Forgot password? </a>
 </form> <!-- loginForm ends -->
 
 
@@ -67,16 +67,16 @@
     // while not changing the page... if there are problems
     // such as no email found, we will receive a HTTP status
     // from the php file and we will alert the user correspondingly
-    document.getElementById('login-button').addEventListener('click', function(event) {
+    document.getElementById('send-form-button').addEventListener('click', function(event) {
         var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'scripts/login.php', true);
+        xhr.open('POST', 'scripts/login-B.php', true);
         var formData = new FormData(document.querySelector('.loginForm'));
         xhr.send(formData);
         // wait asynchronously until php responds...
         xhr.onload = function() {
             // if login has been successful open a new page...
             if (xhr.status == 201) {
-                window.location.href = "logged-in.html";
+                window.location.href = "logged-in.php";
             }
             // if email was not found alert user
             if (xhr.status == 401) {
@@ -91,12 +91,29 @@
                 alert("An unexpected ERROR occurred. Please try again later. If problem persists, send email to rome.lh.bl@gmail.com");
             }
         }
-         // prevent the default way of sending form with POST protocol to avoid opening the php file
-         event.preventDefault();
-        
+        // prevent the default way of sending form with POST protocol to avoid opening the php file
+        event.preventDefault();
     });
 </script>
 
+
+
+<!-- Next php script will transform login button to logout button if user has been logged in-->
+<?php
+function createLogInButton() {
+    session_start(); // Aloita istunto
+
+    // check if user is logged in (has SESSION variable called user_id):
+    if (isset($_SESSION['user_id'])) { 
+        // if user is logged in, login button reads log out! and clicking it logs user out
+        echo '<li id="login-button"><a href="logged-out.php">Log out!</a></li>';
+    } else {
+        // user is not logged in, so use the original login-button, which already exists in html code
+        echo '<li id="login-button"><a href="login.php">Log in!</a></li>';
+    }
+}
+
+?>
 
 </body>
 </html>
