@@ -1,0 +1,63 @@
+
+.forumBase {
+    height:3000px;
+    width: 70vw;
+    margin-left: 15vw;
+    margin-top: 110px;
+    background-color: #c99868;
+    box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.635);
+    border-radius: 20px;
+    padding-top: 10px;
+}
+
+.forumBase h1 {
+    margin-left: 2vw;
+    margin-top: 2vh;
+    font-size: 1.5em;
+}
+
+.forumBase p {
+    margin-left: 2vw;
+}
+
+.talk-area {
+    margin-left: 2vw;
+    margin-right: 2vw;
+    background-color: white;
+    min-height: 200px;
+    border-radius: 10px;
+    position: relative;
+}
+
+.talk-area h2 {
+    padding-left: 1vw;
+    padding-top: 1vw;
+    font-size: 1.3em;
+}
+
+.talk-area a {
+    text-decoration: none;
+    color: black;
+    margin-left: 1vw;
+    padding: 2px;
+    border: solid #c99868 1px;
+    position: absolute;
+    bottom: 2vh;
+}
+
+
+.talk-area a:hover {
+    background-color: aquamarine;
+}
+
+
+@media screen and (max-width: 470px) {
+    .forumBase {
+        border-radius: 10px;
+        margin-top: 270px;
+
+    .talk-area {
+        border-radius: 5px;
+    }
+}
+}

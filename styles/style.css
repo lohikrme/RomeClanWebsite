@@ -7,11 +7,11 @@ body {
     margin: 0;
     padding: 0;
     background-image: url("../images/background.png");
-    background-size: fill;
+    background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position-x: center;
-    background-position-y: 150px;
+    background-position-y: 100px;
 }
 
 header {
@@ -20,20 +20,20 @@ header {
     top: 0;
     left: 0;
     width: 100%;
-    height: 150px;
-    background-color: rgb(133, 133, 133);
+    height: 100px;
+    background-color: rgb(196, 62, 62);
     display: flex;
 }
 
 header .header-left {
     width: 187px;
-    height: 150px;
+    height: 100px;
     align-items: center;
 }
 
 header .header-left #logo {
-    width: 187px;
-    height: 150px;
+    width: 120px;
+    height: 100px;
 }
 
 header .header-right {
@@ -43,7 +43,7 @@ header .header-right {
 header h1 {
     margin-left: 5vw;
     font-family:Arial, Helvetica, sans-serif;
-    font-size: 2.4em;
+    font-size: 1.5em;
 }
 
 header ul {
@@ -51,7 +51,7 @@ header ul {
 }
 
 .menu-items-list li {
-    font-size: 2.2em;
+    font-size: 1.5em;
     display: inline-block;
     margin-right: 50px;
     font-family: 'Brush Script MT', cursive;
@@ -95,14 +95,14 @@ header ul {
     font-family: 'Times New Roman', Times, serif;
     float: right;
     margin-right: 10vw;
-    font-size: 1.8em;
+    font-size: 1.4em;
     font-weight:bolder;
 }
 
 .menu-items-list #own-info-button {
     position: absolute;
-    right: 9vw;
-    top: 8vh;
+    right: 8vw;
+    top: 30px;
 }
 
 .textArea {

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/forum.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
     <title>Document</title>
 </head>
@@ -28,20 +29,30 @@
 
 </header>
 
-<div class="wrap">
-
-    <div class="textArea">
-        <h2>Feel Free to Discuss here! </h2>
-        <p>
-        </p>
-    </div> <!-- textArea ends -->
-
-    <div class="textArea2">
-        <h2>This website is still only a demo... </h2>
-        <p>
-        </p>
-    </div> <!-- textArea2 ends -->
-</div> <!-- wrap ends-->
+<div class="forumBase paper">
+    <h1>Rome Clan Forum</h1>
+    <p>We talk here about bannerlords game and related matters!</p>
+    <br>
+    <div id="general-discussion" class="talk-area">
+        <h2>General Discussion</h2>
+        <a href="write-message.php">New Post!</a>
+    </div>
+    <div id="events" class="talk-area">
+        <h2>Events</h2>
+    </div>
+    <div id="strategies" class="talk-area">
+        <h2>Strategies</h2>
+    </div>
+    <div id="mods" class="talk-area">
+        <h2>Mods</h2>
+    </div>
+    <div id="image-gallery" class="talk-area">
+        <h2>Image Gallery</h2>
+    </div>
+    <div id="ranks" class="talk-area">
+        <h2>Ranks</h2>
+    </div>
+</div> <!-- forumBase ends -->
 
 <!-- next scripts activate jquery library, and then calls updateLoginStatus.php file
 idea is to check if user should still stay logged in, and if need, log out -->
