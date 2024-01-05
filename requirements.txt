@@ -4,3 +4,13 @@ and then remove the semicolon(;) from the beginning of
 ;extension=gd.
 Then restart the server and GF library will be in usage.
 
+Database name: 
+'users'
+Database tables:
+'registrations (ID) (name) (email) (password) (date)'
+'topics (General Discussion) (Events) (Strategies) (Mods) (Image Gallery) (Ranks)'
+'posts (ID) (user_id) (topic_id) (content)'
+
+right now only registrations is in active usage. 
+to make forum finished one needs to use topics and posts
+somehow make sure there wont be SQL breach etc.
